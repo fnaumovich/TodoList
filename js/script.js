@@ -54,12 +54,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isEditing) {
             title.innerText = editInput.value;
+            this.innerText = 'Изменить';
+        } else {
+            editInput.value = title.innerText;
+            this.innerText = 'Сохранить';
         }
+
+        parentNode.classList.toggle('editing');
     };
 
     const deleteTodoItem = function () {
         const parentNode = this.parentNode;
-        parentNode.remove();
+        todoList.removeChild(parentNode);
     };
 
     const bindEvents = function (todoItem) {
@@ -84,7 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
         addInput.value = '';
     };
 
-    todoForm.addEventListener('submit', addTodoItem);
+    function init() {
+        todoForm.addEventListener('submit', addTodoItem);
+        todoItems.forEach(item => bindEvents(item));
+    }
+
+    init();
+
 
 
 });
